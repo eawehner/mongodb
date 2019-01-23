@@ -84,7 +84,7 @@ app.get("/articles/:id", function(req, res) {
 app.post("/articles/:id", function(req, res) {
     db.Excitement.create(req.body)
      .then(function(dbExcite) {
-       return db.Article.findOneAndUpdate({_id: req.params.id}, { $push: {excitement:dbExcite._id}, $set: {isExcited:req.body.isExcited} }, { new: true });    
+       return db.Article.findOneAndUpdate({_id: req.params.id}, { $push: {excitement:dbExcite._id}, $set: {isExcited:req.body.isExcited} }, { new: true });
      })
      .then(function(dbArticle) {
         res.json(dbArticle);
@@ -94,8 +94,17 @@ app.post("/articles/:id", function(req, res) {
      });
 });
 
+//SET UP ROUTE FOR JUST THE EXCITING STORIES
+app.get("/exciting/", function(req, res) {
+    db.Article.find({isExcited: true})
+      .then(function(articles) {
+          res.json(articles);
+      })
+      .catch(function(err) {
+        res.json(err);
+      });
+});
 
-//
 app.listen(PORT, function() {
     console.log("App running on port " + PORT + "!");
 });
