@@ -21,7 +21,19 @@ app.use(express.json());
 app.use(express.static("public"));
 
 //CONNECTING TO OUR DATABASE WITH MONGOOSE
-mongoose.connect("mongodb://localhost/mongodbHW", { useNewUrlParser: true });
+//old code used locally
+// mongoose.connect("mongodb://localhost/mongodbHW", { useNewUrlParser: true });
+
+app.use((req, res, next) => {
+    if (mongoose.connection.readyState) {
+        console.log("if (mongoose.connection.readyState)");
+        next();
+    } else {
+        console.log("else (mongoose.connection.readyState)");
+        require("./mongo")().then(() => next());
+        console.log("else (mongoose.connection.readyState")
+    }
+});
 
 //ESTABLISHING OUR ROUTES
 
