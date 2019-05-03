@@ -46,22 +46,22 @@ pullAllArticles();
 
 //change excitement value when the "I'm Excited!!/I'm not Excited..." buttons are clicked.
 $(document).on("click", ".exciteButton", function(event) {
-    var buttonId = $(this).attr("data-id");
-    var buttonValue = $(this).attr("data-value");
+    var buttonId = $(this).data("id");
+    var buttonValue = $(this).data("value");
 
     var spanSelector = "span#" + buttonId;
 
     console.log(buttonId);
     console.log(buttonValue);
 
-    if (buttonValue) {
+    if (buttonValue === true) {
         $(this).attr("data-value", false);
         $(this).text("I'm not Excited...");
-        $(spanSelector).text("This is <i>not</i> an exciting story...");
+        $(spanSelector).html("This is <i>not</i> an exciting story...");
     } else {
         $(this).attr("data-value", true);
         $(this).text("I'm Excited!!");
-        $(spanSelector).text("This <i>is</i> an exciting story!");
+        $(spanSelector).html("This <i>is</i> an exciting story!");
     }
 
     $.ajax({
