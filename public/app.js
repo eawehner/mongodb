@@ -45,7 +45,8 @@ function pullExcitingArticles() {
 pullAllArticles();
 
 //change excitement value when the "I'm Excited!!/I'm not Excited..." buttons are clicked.
-$(document).on("click", ".exciteButton", function(event) {
+$(document).on('click', '.exciteButton', function(event) {
+
     var buttonId = $(this).data("id");
     var buttonValue = $(this).data("value");
 
@@ -53,16 +54,6 @@ $(document).on("click", ".exciteButton", function(event) {
 
     console.log(buttonId);
     console.log(buttonValue);
-
-    if (buttonValue === true) {
-        $(this).attr("data-value", false);
-        $(this).text("I'm not Excited...");
-        $(spanSelector).html("This is <i>not</i> an exciting story...");
-    } else {
-        $(this).attr("data-value", true);
-        $(this).text("I'm Excited!!");
-        $(spanSelector).html("This <i>is</i> an exciting story!");
-    }
 
     $.ajax({
        method: "POST",
@@ -74,8 +65,21 @@ $(document).on("click", ".exciteButton", function(event) {
     .then(function(data) {
         console.log(data);
     });
-});
 
+    if (buttonValue) {
+        $(this).data("value", false);
+        buttonValue = false;
+        $(this).text("I'm not Excited...");
+        $(spanSelector).html("This is <i>not</i> an exciting story...");
+        return;
+    } else {
+        $(this).data("value", true);
+        buttonValue = true;
+        $(this).text("I'm Excited!!");
+        $(spanSelector).html("This <i>is</i> an exciting story!");
+        return;
+    };
+});
 
 //exciting button will show only the stories where the excitement value is true when clicked
 $(document).on("click", "#excitingArticles", function(event) {
