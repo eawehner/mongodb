@@ -30,10 +30,10 @@ function pullExcitingArticles() {
             var articleHTML = "<div class='article' data-id='" + data[i]._id + "'><a href='" + data[i].link + "' target='_blank'><h3>" + data[i].headline +"</h3></a>";
 
             //if there's saved excitement records (ie. people keep hitting the excited/not excited button), show the number of records as a 'controversy score'. however, current feature seems to only record the  length of IDs saved
-            if (data[i].excitement) {
-                var excitementNum = data[i].excitement.length;
-                articleHTML += "<br /> Controversy score: " + excitementNum + "!";
-            }
+            // if (data[i].excitement) {
+            //     var excitementNum = data[i].excitement;
+            //     articleHTML += "<br /> Controversy score: " + excitementNum + "!";
+            // }
 
             articleHTML += "</div>";
 
@@ -70,14 +70,12 @@ $(document).on('click', '.exciteButton', function(event) {
         $(this).data("value", false);
         buttonValue = false;
         $(this).text("I'm not Excited...");
-        $(spanSelector).html("This is <i>not</i> an exciting story...");
-        return;
+        $(spanSelector).html("This <i>is</i> an exciting story!");
     } else {
         $(this).data("value", true);
         buttonValue = true;
         $(this).text("I'm Excited!!");
-        $(spanSelector).html("This <i>is</i> an exciting story!");
-        return;
+        $(spanSelector).html("This is <i>not</i> an exciting story...");
     };
 });
 
